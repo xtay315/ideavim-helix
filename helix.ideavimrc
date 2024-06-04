@@ -85,22 +85,22 @@ nnoremap gb L
 vnoremap gb L
 
 let g:WhichKeyDesc_GoToDefinition = "gd   Goto definition"
-map <leader>gd <Action>(GotoDeclartion)
+nnoremap gd :action GotoDeclaration<CR>
 
 let g:WhichKeyDesc_GoToTypeDefinition = "gy   Goto type definition"
-map <leader>gy <Action>(GotoTypeDeclaration)
+nnoremap gy :action GotoTypeDeclaration<CR>
 
 let g:WhichKeyDesc_GoToReferences = "gr   Goto references"
-map <leader>gr <Action>(FindUsages)
+nnoremap gr :action FindUsages<CR>
 
 let g:WhichKeyDesc_GoToImplementation = "gi   Goto implementation"
-map <leader>gr <Action>(GotoImplementtation)
+nnoremap gi :action GotoImplementation<CR>
 
 let g:WhichKeyDesc_GoToLastAccessedFile = "ga   Goto last accessed file"
 nnoremap ga :b#<CR>
 
 let g:WhichKeyDesc_GoToLastModifiedFile = "gm   Goto last modified file"
-" nnoremap gm :b#<CR>
+nnoremap gm :b#<CR>
 
 let g:WhichKeyDesc_GoToNextBuffer = "gn   Goto next buffer"
 nnoremap gn :bnext<CR>
@@ -235,6 +235,8 @@ map <leader>t <Action>(ActivateTerminalToolWindow)
 
 map <c-n> <Action>(GotoNextElementUnderCaretUsage)
 map <c-p> <Action>(GotoPrevElementUnderCaretUsage)
+
+map <c-l> <Action>(SelectInProjectView)
 
 " 重新定义 Ctrl+u 和 Ctrl+d
 nnoremap <C-u> :call ScrollUp(10)<CR>
