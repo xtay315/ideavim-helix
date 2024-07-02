@@ -88,7 +88,8 @@ let g:WhichKeyDesc_GoToDefinition = "gd   Goto definition"
 nnoremap gd :action GotoDeclaration<CR>
 
 let g:WhichKeyDesc_GoToTypeDefinition = "gy   Goto type definition"
-nnoremap gy :action GotoTypeDeclaration<CR>
+" nnoremap gy :action GotoTypeDeclaration<CR>
+nnoremap gy :action GotoSuperMethod<CR>
 
 let g:WhichKeyDesc_GoToReferences = "gr   Goto references"
 nnoremap gr :action FindUsages<CR>
@@ -151,7 +152,8 @@ let g:WhichKeyDesc_CloseAll = "<leader>wq   Close all editors"
 map <leader>wq <Action>(CloseAllEditors)
 
 let g:WhichKeyDesc_CloseOther = "<leader>wo  Close other editors"
-map <leader>wo <Action>(CloseAllEditorButActive)
+" map <leader>wo <Action>(CloseAllEditorsButActive)
+map <leader>wo <Action>(UnsplitAll)
 
 let g:WhichKeyDesc_FocusLeft = "<leader>wh  Focus left window"
 nnoremap <leader>wh <C-w>h
@@ -209,11 +211,11 @@ vnoremap d :action EditorDelete<CR>
 nnoremap x V
 vnoremap x :action EditorDownWithSelection<CR>
 
-nnoremap w :action EditorNextWordWithSelection<CR>
-vnoremap w <ESC>:action EditorNextWordWithSelection<CR>
+" nnoremap w :action EditorNextWordWithSelection<CR>
+" vnoremap w <ESC>:action EditorNextWordWithSelection<CR>
 
-nnoremap b :action EditorPreviousWordWithSelection<CR>
-vnoremap b <ESC>:action EditorPreviousWordWithSelection<CR>
+" nnoremap b :action EditorPreviousWordWithSelection<CR>
+" vnoremap b <ESC>:action EditorPreviousWordWithSelection<CR>
 " FIXME
 vnoremap %s :action SelectAllOccurrences<CR>
 nnoremap U <C-R>
@@ -224,19 +226,23 @@ nnoremap U <C-R>
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 let g:WhichKeyDesc_Action = "<leader>: Actions"
-map <leader>: <Action>(GotoAction)
+map <leader><CR> <Action>(GotoAction)
+let g:WichKeyDesc_Explorer = "<leader>: Location in explorer"
+map <leader>e <Action>(SelectInProjectView)
 
 let g:WhichKeyDesc_Git = "<leader>i Git"
 map <leader>i <Action>(ActivateVersionControlToolWindow)
 
-let g:WhichKeyDesc_Terminal = "<leader>t Terminal"
+let g:WhichKeyDesc_Terminal = "<leader><Space> Terminal"
 " map <leader>t <Action>(Terminal.OpenInTerminal)
-map <leader>t <Action>(ActivateTerminalToolWindow)
+map <leader><Space> <Action>(ActivateTerminalToolWindow)
 
 map <c-n> <Action>(GotoNextElementUnderCaretUsage)
 map <c-p> <Action>(GotoPrevElementUnderCaretUsage)
+map <c-j> <Action>(MoveLineDown)
+map <c-k> <Action>(MoveLineUp)
 
-map <c-l> <Action>(SelectInProjectView)
+" map <c-l> <Action>(SelectInProjectView)
 
 " 重新定义 Ctrl+u 和 Ctrl+d
 nnoremap <C-u> :call ScrollUp(10)<CR>
@@ -249,4 +255,19 @@ endfunction
 
 function! ScrollDown(lines)
     execute "normal!" a:lines . "j"
+endfunction
+
+" 在插入模式启用补全
+autocmd InsertEnter * :call EnableCompletion()
+" 在离开插入模式禁用补全
+autocmd InsertLeave * :call DisableCompletion()
+
+" 启用补全功能的函数
+function! EnableCompletion()
+  " call CocAction('enableCompletion')
+endfunction
+
+" 禁用补全功能的函数
+function! DisableCompletion()
+  " call CocAction('disableCompletion')
 endfunction
